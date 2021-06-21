@@ -1,0 +1,66 @@
+<html>
+<body>
+
+    <div>
+        <label>Name:</label>
+        <input type="text">
+    </div>
+
+    <div>
+        <label>
+            Regio's:
+            <select id="regionsSelect" class="regions-multiple" name="states" multiple="multiple">
+            </select>
+        </label>
+    </div>
+
+    <footer>
+        <p>Version: Test</p>
+    </footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+
+document.onload = GetRegions();
+
+function GetRegions() {
+    var settings = {
+      "url": "https://uatreporter.mediahuis.be/swing/datasource/?ds=locations&op=rquery&q=_City%2B_*%2B_%2B",
+      "method": "GET",
+      "dataType": "xml"      
+    };
+
+    $.ajax(settings).done(function (response) {
+
+        $(response).find('ra').each(function() {
+            
+            var $ra = $(this);
+
+            $ra.find('Row').each(function() {
+
+                var $row = $(this);
+                var country = $row.find('COUNTRY').text();
+                var province = $row.find('PROVINCE').text();
+                var city = $row.find('CITY').text();
+                var zipcode = $row.find('ZIPCODE').text();
+
+                var option = document.createElement("option");
+                option.value = zipcode;
+                option.innerHTML = city + ", " + zipcode;
+
+                $('#regionsSelect').append(option);
+
+            })
+
+        });
+
+        $('#regionsSelect').select2();
+
+    });
+}
+
+</script>
+</body>
+</html>
