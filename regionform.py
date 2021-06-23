@@ -1,6 +1,4 @@
 import flask
-import logging
-
 from flask.helpers import flash
 from db import get_db, init
 
@@ -46,4 +44,8 @@ def postregions():
         return flask.json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0')
+
+    import logging
+    logging.basicConfig(filename='error.log',level=logging.DEBUG)
+    
+    app.run(host='0.0.0.0')
