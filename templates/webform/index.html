@@ -57,14 +57,10 @@ function PostRegions() {
         regionlist.push(regions[i].value);
     }
 
-    console.log(regionlist)
-
     var data = {
         "name": name,
         "regions": regionlist
-    };   
-
-    console.log(data);
+    }; 
 
     $.ajax({
         type: "POST",
